@@ -6,4 +6,8 @@
     <select id="selectAll" resultType="Mansion">
         <![CDATA[SELECT id,name,address,station,floor_plan_id AS floorPlanId,building_date AS buildingDate,status FROM mansion]]>
     </select>
+
+    <select id="selectById" parameterType="int" resultType="Mansion">
+        <![CDATA[SELECT id,name,address,station,floor_plan_id AS floorPlanId,building_date AS buildingDate,status AS status FROM mansion WHERE id=#{id}]]>
+    </select>
 </mapper>

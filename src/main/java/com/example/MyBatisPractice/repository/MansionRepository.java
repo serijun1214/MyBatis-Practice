@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface MansionRepository {
     public List<Mansion> selectAll();
+    public Mansion selectById(Integer id);
 }
