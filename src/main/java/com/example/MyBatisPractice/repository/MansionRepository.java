@@ -17,6 +17,5 @@ public interface MansionRepository {
     List<Mansion> selectByNameStation(Mansion mansion);
     Boolean insert(Mansion mansion);
     Boolean update(Mansion mansion);
-
-
+    Mansion selectByIdWithFloorPlan(Integer id);
 }

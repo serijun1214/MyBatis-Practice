@@ -14,4 +14,5 @@ public class Mansion implements Serializable {
     private Integer floorPlanId;
     private Date buildingDate;
     private Boolean status;
+    private FloorPlan floorPlan;
 }

@@ -72,4 +72,21 @@
         </set>
         where id=#{id}
     </update>
+
+    <resultMap id="mansionResult" type="Mansion">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="address" column="address" />
+        <result property="station" column="station" />
+        <result property="floorPlanId" column="floor_plan_id" />
+        <result property="busildingDate" column="building_date" />
+        <result property="status" column="status" />
+        <association property="floorPlan" javaType="FloorPlan">
+            <id property="id" column="id" />
+            <result property="floorPlanName" column="floor_plan_name" />
+        </association>
+    </resultMap>
+    <select id="selectByIdWithFloorPlan" resultMap="mansionResult">
+        <![CDATA[SELECT m.id,m.name,f.floor_plan_name FROM mansion m INNER JOIN floor_plan f ON m.floor_plan_id=f.id WHERE m.id=#{id}]]>
+    </select>
 </mapper>

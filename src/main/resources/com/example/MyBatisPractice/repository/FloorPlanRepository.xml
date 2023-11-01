@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.MyBatisPractice.repository.FloorPlanRepository">
+    <resultMap id="floorPlanResult" type="FloorPlan">
+        <id property="id" column="id" />
+        <result property="floorPlanName" column="floor_plan_name" />
+        <collection property="mansions" ofType="Mansion">
+            <id property="id" column="id" />
+            <result property="name" column="name" />
+            <result property="address" column="address" />
+            <result property="station" column="station" />
+            <result property="floorPlanId" column="floor_plan_id" />
+            <result property="busildingDate" column="building_date" />
+            <result property="status" column="status" />
+        </collection>
+    </resultMap>
+    <select id="selectByFloorPlanIdWithMansion" resultMap="floorPlanResult">
+        <![CDATA[SELECT m.name,f.floor_plan_name FROM mansion m INNER JOIN floor_plan f ON m.floor_plan_id=f.id WHERE m.floor_plan_id=#{id}]]>
+    </select>
+</mapper>

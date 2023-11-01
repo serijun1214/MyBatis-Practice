@@ -1,6 +1,8 @@
 package com.example.MyBatisPractice;
 
+import com.example.MyBatisPractice.entity.FloorPlan;
 import com.example.MyBatisPractice.entity.Mansion;
+import com.example.MyBatisPractice.repository.FloorPlanRepository;
 import com.example.MyBatisPractice.repository.MansionRepository;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,9 @@ import java.util.List;
 public class MyBatisPracticeApplication {
 	@Autowired
 	MansionRepository mansionRepository;
+
+	@Autowired
+	FloorPlanRepository floorPlanRepository;
 
 	public static void main(String[] args) {
 		ApplicationContext context = SpringApplication.run(MyBatisPracticeApplication.class, args);
@@ -87,5 +92,11 @@ public class MyBatisPracticeApplication {
 		mansion.setAddress("東京都渋谷区渋谷111");
 		mansion.setStation("JR渋谷駅");
 		mansionRepository.update(mansion);
+
+		List<FloorPlan> result2 = floorPlanRepository. selectByFloorPlanIdWithMansion (1);
+		System.out.println(result2);
+
+		Mansion result3 = mansionRepository.selectByIdWithFloorPlan(2);
+		System.out.println(result3);
 	}
 }
