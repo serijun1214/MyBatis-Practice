@@ -10,4 +10,66 @@
     <select id="selectById" parameterType="int" resultType="Mansion">
         <![CDATA[SELECT id,name,address,station,floor_plan_id AS floorPlanId,building_date AS buildingDate,status AS status FROM mansion WHERE id=#{id}]]>
     </select>
+
+    <select id="selectByStatusBuildingDate" resultType="Mansion">
+        <![CDATA[SELECT id,name,address,station,floor_plan_id AS floorPlanId,building_date AS buildingDate,status AS status FROM mansion WHERE status=#{status}]]>
+        <if test="buildingDate != null">
+            <![CDATA[ AND building_date = #{buildingDate} ]]>
+        </if>
+    </select>
+
+    <select id="selectByFloorPlanIdBuildingDateStatus" resultType="Mansion">
+        SELECT id,name,address,station,floor_plan_id AS floorPlanId
+        ,building_date AS buildingDate,status FROM mansion
+        WHERE
+        <choose>
+            <when test="floorPlanId != null">
+                floor_plan_id = #{floorPlanId}
+            </when>
+            <when test="buildingDate != null">
+                building_date >= #{buildingDate}
+            </when>
+            <otherwise>
+                status = true
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="selectByIdIN" resultType="Mansion">
+        <![CDATA[SELECT id,name,address,station,floor_plan_id AS floorPlanId,building_date AS buildingDate,status AS status FROM mansion WHERE id IN]]>
+        <foreach item="idList" collection="list" open="(" separator="," close=")">
+            #{idList}
+        </foreach>
+    </select>
+
+    <select id="selectByStationLIKE" resultType="Mansion">
+        <bind name="station" value="'%'+_parameter+'%'" />
+        <![CDATA[SELECT id,name,address,station,floor_plan_id AS floorPlanId,building_date AS buildingDate,status AS status FROM mansion WHERE station LIKE #{station}]]>
+    </select>
+
+    <select id="selectByNameStation" resultType="Mansion">
+        SELECT * FROM mansion
+        <trim prefix="WHERE" prefixOverrides="AND |OR ">
+            <if test=" name != null">
+                name = #{name}
+            </if>
+            <if test="station != null">
+                AND station = #{station}
+            </if>
+        </trim>
+    </select>
+
+    <insert id="insert" parameterType="Mansion">
+        <![CDATA[INSERT INTO mansion (name,address,station,floor_plan_id,building_date,status) VALUES(#{name},#{address},#{station},#{floorPlanId},#{buildingDate},#{status}) ]]>
+    </insert>
+
+    <update id="update">
+        update mansion
+        <set>
+            <if test="name != null">name=#{name},</if>
+            <if test="address != null">address=#{address},</if>
+            <if test="station != null">station=#{station}</if>
+        </set>
+        where id=#{id}
+    </update>
 </mapper>
