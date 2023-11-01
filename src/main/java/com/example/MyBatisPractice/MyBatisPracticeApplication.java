@@ -15,12 +15,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication
+//Mapperインターフェースのパス(FQCN)を記述
+//これを記述しない場合は、Mapperインターフェースに@Mapperをつける
 @MapperScan("com.example.MyBatisPractice.repository")
 public class MyBatisPracticeApplication {
-	@Autowired
+
+	@Autowired //インスタンスをもらう
 	MansionRepository mansionRepository;
 
-	@Autowired
+	@Autowired //インスタンスをもらう
 	FloorPlanRepository floorPlanRepository;
 
 	public static void main(String[] args) {
